@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="rice">rice</string>
+    <string name="add_item">Add Item</string>
+    <string name="pasta">pasta</string>
+    <string name="cheese">cheese</string>
+    <string name="potatoes">potatoes</string>
+    <string name="spinaci">spinaci</string>
+    <string name="bread">bread</string>
+    <string name="water">water</string>
+    <string name="tomatoes">tomatoes</string>
+    <string name="yoghurt">yoghurt</string>
+    <string name="icecream">iceCream</string>
+    <string name="store">Coop,Marina di pisa</string>
+    <string name="store_button">go to the store</string>
+</resources>
