@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StandUp!</string>
+    <string name="turnOn_toast">the alarm is turn on</string>
+    <string name="turnOff_toast">the alarm is turn off</string>
+    <string name="AlarmTitile">Stand Up Alert</string>
+    <string name="AlarmText">Tou should stand up and star to walk areound now!</string>
+</resources>
