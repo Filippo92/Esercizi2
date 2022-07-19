@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,12 +42,19 @@ public class MainActivity extends AppCompatActivity {
         mDeviceIdleSwitch = findViewById(R.id.idleSwitch);
         mDeviceChargingSwitch = findViewById(R.id.chargingSwitch);
         networkOptions=findViewById(R.id.networkOptions);
+        mSeekBar=findViewById(R.id.seekBar);
+        final TextView seekBarProgress = findViewById(R.id.seekBarProgress);
         scheduleJob.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 int selectedNetworkId = networkOptions.getCheckedRadioButtonId();
                 int selectedNetworkOption = JobInfo.NETWORK_TYPE_NONE;
+
+                //per vedere progresso avanzamento
+                int seekBarInteger=mSeekBar.getProgress();
+                boolean seekBarSet=seekBarInteger>0;
+
                 //INIZIALIZZO il jobscheduler
                 mJobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
 
@@ -68,8 +76,12 @@ public class MainActivity extends AppCompatActivity {
                         .setRequiresCharging(mDeviceChargingSwitch.isChecked());;
                 builder.setRequiredNetworkType(selectedNetworkOption);
 
+                if (seekBarSet) {
+                    builder.setOverrideDeadline(seekBarInteger * 1000);
+                }
+
                 //valore per indicarmi se almeno un lavoro è settato
-                boolean constrainSet=(selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE)  || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked(); //defaul set
+                boolean constrainSet=(selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE)  || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked()   || seekBarSet;; //defaul set
                 if(constrainSet){
                     //schedulo il job e notifico all'utente
                     JobInfo myJobInfo = builder.build();
@@ -81,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
+
             }
         });
         cancelJobs.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +103,27 @@ public class MainActivity extends AppCompatActivity {
                     mJobScheduler.cancelAll();
                     mJobScheduler=null;
                 }
+            }
+        });
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+              //progress è il valore corrente dell seekbar,quando un valore è settatto >0 restituisce il valore
+                if (progress > 0){
+                    seekBarProgress.setText(progress + " s");
+                }else {
+                    seekBarProgress.setText("Not Set");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
