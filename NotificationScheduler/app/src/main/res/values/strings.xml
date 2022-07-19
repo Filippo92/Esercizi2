@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Notification Scheduler</string>
+    <string name="schedule_job">Schedule job</string>
+    <string name="cancel_jobs">Cancel jobs</string>
+</resources>
