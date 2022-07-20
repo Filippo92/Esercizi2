@@ -12,17 +12,18 @@ import java.util.concurrent.Executor;
 
 public class MyJobService extends JobService {
 
+private TextView mTextView;
 
 
     @Override
     public boolean onStartJob(JobParameters params) {
-
+        Task task1=new Task(mTextView);
+        task1.execute();
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
-
         return false;
     }
 

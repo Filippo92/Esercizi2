@@ -1,11 +1,14 @@
 package com.example.jobschedulercodingchallenge;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.app.IntentService;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private SwitchCompat mDeviceIdleSwitch;
     private SwitchCompat mDeviceChargingSwitch;
 
-
+   //task1
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mDeviceIdleSwitch = findViewById(R.id.idleSwitch);
         mDeviceChargingSwitch = findViewById(R.id.chargingSwitch);
         networkOptions=findViewById(R.id.networkOptions);
+        mTextView=findViewById(R.id.textTask);
 
 
         scheduleJob.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                     mJobScheduler.schedule(myJobInfo);
 
                     Toast.makeText(MainActivity.this, "Job Scheduled, job will run when the constraints are met.", Toast.LENGTH_SHORT).show();
+
+                    Intent intent =new Intent()
+
                 }else{
                     Toast.makeText(MainActivity.this, "Please set at least one constraint " , Toast.LENGTH_SHORT).show();
                 }
