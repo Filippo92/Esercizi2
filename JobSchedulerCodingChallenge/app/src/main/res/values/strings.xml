@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JobSchedulerCodingChallenge</string>
+    <string name="schedule_job">schedule job</string>
+    <string name="cancel_jobs">cancel jobs</string>
+</resources>

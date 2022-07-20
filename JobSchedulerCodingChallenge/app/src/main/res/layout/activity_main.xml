@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network type required"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_margin="4dp"
+        />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/networkOptions">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/anyNtwork"
+            android:checked="true"
+            android:text="any"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wifiNetwork"
+            android:checked="true"
+            android:text="wify"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/noNetwork"
+            android:checked="true"
+            android:text="none"
+            />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network type required"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_margin="4dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="4dp">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Device Idle"
+            android:id="@+id/idleSwitch">
+
+        </androidx.appcompat.widget.SwitchCompat>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Device Charging"
+            android:id="@+id/chargingSwitch">
+
+        </androidx.appcompat.widget.SwitchCompat>
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_job"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4dp">
+
+    </Button>
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_jobs"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4dp">
+
+    </Button>
+
+
+
+</LinearLayout>
