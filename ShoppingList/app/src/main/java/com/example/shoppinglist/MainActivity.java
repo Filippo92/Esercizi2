@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SecondActivity.class);
         startActivityForResult(intent, TEXT_REQUEST);
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
