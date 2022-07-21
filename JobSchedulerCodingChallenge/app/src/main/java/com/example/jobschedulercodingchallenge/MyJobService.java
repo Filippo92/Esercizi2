@@ -55,6 +55,7 @@ public class MyJobService extends JobService {
 
         Task task1=new Task();
         task1.execute();
+        jobFinished(params,false);
 
         return true;
     }
