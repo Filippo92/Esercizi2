@@ -8,7 +8,9 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -19,9 +21,15 @@ public class NotificationJobService extends JobService {
 
     NotificationManager mNotifYManager;
 
+
+
+
+
+
     @Override
     public boolean onStartJob(JobParameters params) {
         createNotificationChannel();
+
 
         //settiamo l'intetn che lancera l'app quando cliccata
         PendingIntent contentPending=  PendingIntent.getActivity(this,0,new Intent(this,MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
@@ -40,7 +48,10 @@ public class NotificationJobService extends JobService {
         Notification notification=builder.build();
 
         mNotifYManager.notify(0,notification);
-        return false;
+        Task task1=new Task();
+        task1.execute();
+        jobFinished(params,false);
+        return true;
     }
 
     @Override
@@ -65,7 +76,39 @@ public class NotificationJobService extends JobService {
             notificationChannel.setDescription("Notification from job service");
 
             mNotifYManager.createNotificationChannel(notificationChannel);
+
         }
+
+    }
+
+    public class Task extends AsyncTask<Void,Integer,String> {
+
+
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            Log.d("Task","start the task");
+            return null ;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.d("task","finish task");
+
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+
+
 
     }
 }

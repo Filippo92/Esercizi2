@@ -88,7 +88,7 @@
             android:id="@+id/seekBarLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="override deadline"
+            android:text="override deadline: "
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         <TextView

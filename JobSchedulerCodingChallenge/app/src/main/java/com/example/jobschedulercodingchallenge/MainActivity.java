@@ -10,6 +10,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         networkOptions = findViewById(R.id.networkOptions);
 
         mSeekBar = findViewById(R.id.seekBar);
-        int seekBarInteger = mSeekBar.getProgress();
-        boolean seekBarSet = seekBarInteger > 0;
+
+
 
 
         final TextView seekBarProgress = findViewById(R.id.seekBarProgress);
@@ -79,31 +80,29 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ComponentName service = new ComponentName(getPackageName(), MyJobService.class.getName());
                 JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, service)
-                        .setRequiredNetworkType(selectedNetworkOption)
-                        .setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked())
-                        .setRequiresCharging(mDeviceChargingSwitch.isChecked());
-
-                builder.setRequiredNetworkType(selectedNetworkOption);
+                        .setRequiredNetworkType(selectedNetworkOption);
+                       // .setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked())
+                       // .setRequiresCharging(mDeviceChargingSwitch.isChecked());
 
 
-                //valore per indicarmi se almeno un lavoro è settato
 
+
+                //per forzare esecuzione task
+                int seekBarInteger = mSeekBar.getProgress();
+                boolean seekBarSet = seekBarInteger > 0;
                 if (seekBarSet) {
                     builder.setOverrideDeadline(seekBarInteger * 1000);
                 }
-                boolean constraintSet = selectedNetworkOption
-                        != JobInfo.NETWORK_TYPE_NONE
-                        || mDeviceChargingSwitch.isChecked()
-                        || mDeviceIdleSwitch.isChecked()
-                        || seekBarSet;
+                //boolean constraintSet = selectedNetworkOption!= JobInfo.NETWORK_TYPE_NONE|| mDeviceChargingSwitch.isChecked()|| mDeviceIdleSwitch.isChecked()|| seekBarSet;
 
 
-                boolean constrainSet = (selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE) || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();//defaul set
+                boolean constrainSet = true;//selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();//defaul set
                 if (constrainSet) {
                     //schedulo il job e notifico all'utente
 
                     JobInfo myJobInfo = builder.build();
                     mJobScheduler.schedule(myJobInfo);
+                    Log.d("app","it will start");
 
                     Toast.makeText(MainActivity.this, "Job Scheduled, job will run when the constraints are met.", Toast.LENGTH_SHORT).show();
 
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mJobScheduler != null) {
                     mJobScheduler.cancelAll();
                     mJobScheduler = null;
-                    Toast.makeText(MainActivity.this, "stop ", Toast.LENGTH_SHORT).show();
+                    Log.d("app","stop");
                 }
             }
         });
