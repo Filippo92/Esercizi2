@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ComponentName service = new ComponentName(getPackageName(), MyJobService.class.getName());
                 JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, service)
-                        .setRequiredNetworkType(selectedNetworkOption);
-                       // .setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked())
-                       // .setRequiresCharging(mDeviceChargingSwitch.isChecked());
+                        .setRequiredNetworkType(selectedNetworkOption)
+                        .setRequiresDeviceIdle(!mDeviceIdleSwitch.isChecked())
+                        .setRequiresCharging(!mDeviceChargingSwitch.isChecked());
 
 
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 //boolean constraintSet = selectedNetworkOption!= JobInfo.NETWORK_TYPE_NONE|| mDeviceChargingSwitch.isChecked()|| mDeviceIdleSwitch.isChecked()|| seekBarSet;
 
 
-                boolean constrainSet = true;//selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();//defaul set
+                boolean constrainSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();//defaul set
                 if (constrainSet) {
                     //schedulo il job e notifico all'utente
 
