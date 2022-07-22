@@ -1,21 +1,16 @@
 package com.example.jobschedulercodingchallenge;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import android.app.IntentService;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,28 +27,18 @@ public class MainActivity extends AppCompatActivity {
     private SwitchCompat mDeviceIdleSwitch;
     private SwitchCompat mDeviceChargingSwitch;
 
-    //task1
-    //Override deadline seekbar
-    private SeekBar mSeekBar;
 
-    public static final int TEXT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         scheduleJob = findViewById(R.id.schedule);
-        cancelJobs = findViewById(R.id.cancel);
+        cancelJobs=findViewById(R.id.cancel);
         mDeviceIdleSwitch = findViewById(R.id.idleSwitch);
         mDeviceChargingSwitch = findViewById(R.id.chargingSwitch);
-        networkOptions = findViewById(R.id.networkOptions);
+        networkOptions=findViewById(R.id.networkOptions);
 
-        mSeekBar = findViewById(R.id.seekBar);
-
-
-
-
-        final TextView seekBarProgress = findViewById(R.id.seekBarProgress);
 
         scheduleJob.setOnClickListener(new View.OnClickListener() {
 
@@ -80,80 +65,41 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ComponentName service = new ComponentName(getPackageName(), MyJobService.class.getName());
                 JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, service)
-                        .setRequiredNetworkType(selectedNetworkOption)
-                        .setRequiresDeviceIdle(!mDeviceIdleSwitch.isChecked())
-                        .setRequiresCharging(!mDeviceChargingSwitch.isChecked());
+                        .setRequiresDeviceIdle(mDeviceIdleSwitch.isChecked())
+                        .setRequiresCharging(mDeviceChargingSwitch.isChecked());;
+                builder.setRequiredNetworkType(selectedNetworkOption);
 
 
-
-
-                //per forzare esecuzione task
-                int seekBarInteger = mSeekBar.getProgress();
-                boolean seekBarSet = seekBarInteger > 0;
-                if (seekBarSet) {
-                    builder.setOverrideDeadline(seekBarInteger * 1000);
-                }
-                //boolean constraintSet = selectedNetworkOption!= JobInfo.NETWORK_TYPE_NONE|| mDeviceChargingSwitch.isChecked()|| mDeviceIdleSwitch.isChecked()|| seekBarSet;
-
-
-                boolean constrainSet = selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked();//defaul set
-                if (constrainSet) {
+                //valore per indicarmi se almeno un lavoro è settato
+                boolean constrainSet=(selectedNetworkOption != JobInfo.NETWORK_TYPE_NONE)  || mDeviceChargingSwitch.isChecked() || mDeviceIdleSwitch.isChecked()  ;//defaul set
+                if(constrainSet){
                     //schedulo il job e notifico all'utente
-
                     JobInfo myJobInfo = builder.build();
                     mJobScheduler.schedule(myJobInfo);
-                    Log.d("app","it will start");
 
                     Toast.makeText(MainActivity.this, "Job Scheduled, job will run when the constraints are met.", Toast.LENGTH_SHORT).show();
-
-
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Please set at least one constraint ", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Please set at least one constraint " , Toast.LENGTH_SHORT).show();
                 }
+
 
 
             }
         });
 
-        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress > 0) {
-                    seekBarProgress.setText(progress+"s");
-                } else {
-                    seekBarProgress.setText("not set");
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
-        //cancelJobs button
+       //cancelJobs button
         cancelJobs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mJobScheduler != null) {
+                if(mJobScheduler !=null){
                     mJobScheduler.cancelAll();
-                    mJobScheduler = null;
-                    Log.d("app","stop");
+                    mJobScheduler=null;
                 }
             }
         });
 
 
+
+
     }
-
-
-
-
 }

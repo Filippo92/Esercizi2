@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textTask" type="id">textTask</item>
+    <item name="editTextTextPersonName" type="id">g</item>
+</resources>
