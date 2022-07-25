@@ -1,5 +1,7 @@
 package com.example.appwithsettings;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -12,16 +14,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.example.appwithsettings.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+       //save the default valies,set false means that it starts without overiding user's settings values
+        PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
+
+      //read changed settings
+        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean switchPref=  sharedPreferences.getBoolean(SettingsActivity.KEY_PREF_EXAMPLE_SWITCH,false);
+        Toast.makeText(MainActivity.this,switchPref.toString(),Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -61,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+          //launch an intent once click on menu item
+            Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
